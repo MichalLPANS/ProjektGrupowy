@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Tytuł{% endblock %}</title>
+  <link rel="icon" href="{{ asset('img/logo.gif') }}">
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% block stylesheets %}
+{% endblock %}
+
+  <script src="{{ asset('js/script.js') }}"></script>
+{% block javascripts %}
+{% endblock %}
+  </head>
+  <body>
+{% include "navbar.html.twig" %}
+    <div class="content">
+{% block body %}{% endblock %}
+    </div>
+    <footer>
+{% include "footer.html.twig" %}
+    </footer>
+  </body>
+</html>

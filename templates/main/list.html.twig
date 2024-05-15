@@ -1,0 +1,58 @@
+{% extends 'main.html.twig' %}
+
+{% block title %}Lista wydarzeń{% endblock %}
+
+{% block body %}
+<div class="events">
+  <form method="get" action="">
+    <label for="sort_by">Sortuj po:</label>
+    <select id="sort_by" name="sort_by">
+      <option value="miasto_asc">Miasto (rosnąco)</option>
+      <option value="miasto_desc">Miasto (malejąco)</option>
+      <option value="cena_asc">Cena (rosnąco)</option>
+      <option value="cena_desc">Cena (malejąco)</option>
+      <option value="bilety_asc">Bilety (rosnąco)</option>
+      <option value="bilety_desc">Bilety (malejąco)</option>
+    </select>
+    <button class="btn" type="submit">Sortuj</button>
+  </form>
+</div>
+
+{% set sort_by = app.request.query.get('sort_by')|default('0') %}
+
+{% set sorted_events = events %}
+{% if sort_by == 'miasto_asc' %}
+{% set sorted_events = sorted_events|sort((a, b) => a.miasto <=> b.miasto) %}
+{% elseif sort_by == 'miasto_desc' %}
+{% set sorted_events = sorted_events|sort((a, b) => a.miasto <=> b.miasto)|reverse %}
+{% elseif sort_by == 'cena_asc' %}
+{% set sorted_events = sorted_events|sort((a, b) => a.cena <=> b.cena) %}
+{% elseif sort_by == 'cena_desc' %}
+{% set sorted_events = sorted_events|sort((a, b) => a.cena <=> b.cena)|reverse %}
+{% elseif sort_by == 'bilety_asc' %}
+{% set sorted_events = sorted_events|sort((a, b) => a.ilosc <=> b.ilosc) %}
+{% elseif sort_by == 'bilety_desc' %}
+{% set sorted_events = sorted_events|sort((a, b) => a.ilosc <=> b.ilosc)|reverse %}
+{% endif %}
+<div class="events">
+{% for iteration in sorted_events %}
+  <form method="post" action="{{ path('app_buy') }}">
+    <div class="event">
+      <h2 class="h2">{{ iteration.miasto }}</h2>
+{% set suma = 0 %}
+{% for item in iteration.bilety %}
+  {% set suma = suma + item.iloscBiletow %}
+{% endfor %}
+      Bilety: {{ iteration.ilosc }} (dostępne: {{ iteration.ilosc - suma }})
+      <p>{{ iteration.opis }}</p>
+      <div class="price">
+        Cena: {{ iteration.cena }} zł
+        <input type="number" id="ilosc" name="ilosc" placeholder="Ilość" min="1" required>
+        <input type="hidden" id="event" name="event" value="{{ iteration.id }}">
+        <button type="submit" class="btn">Kup bilet(-y)</button>
+      </div>
+    </div>
+  </form>
+{% endfor %}
+</div>
+{% endblock %}

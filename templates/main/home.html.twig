@@ -1,0 +1,18 @@
+{% extends 'main.html.twig' %}
+
+{% block title %}Strona główna{% endblock %}
+
+{% block body %}
+{% if app.user %}
+{% if 'ROLE_ADMIN' in app.user.roles %}
+<section>
+  <h1>Wyświetl listę admina:</h1><button class="btn" onclick="location.href='{{ path('app_admin') }}'">Lista admina</button>
+</section>
+{% endif %}
+<section>
+  <h1>Wyświetl listę wydarzeń:</h1><button class="btn" onclick="location.href='{{ path('app_list') }}'">Lista wydarzeń</button>
+</section>
+{% else %}
+  <h1>Zaloguj się:</h1><button class="btn" onclick="location.href='{{ path('app_login') }}'">Zaloguj się</button>
+{% endif %}
+{% endblock %}
