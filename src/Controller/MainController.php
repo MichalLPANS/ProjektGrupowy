@@ -41,6 +41,7 @@ class MainController extends AbstractController
     if ($request->isMethod('POST')) {
       $ilosc = $request->request->get('ilosc');
       $event = $entityManager->getRepository(Event::class)->find($event_id);
+      
       $ilosc_kupionych_biletow = $event->getBilety();
       $suma = 0;
 
@@ -53,7 +54,7 @@ class MainController extends AbstractController
       }
       $transakcja = new Transakcje();
       $transakcja->setUser($user);
-      $transakcja->addEvent($event);
+      $transakcja->setEvents($event);
       $transakcja->setIloscBiletow($ilosc);
 
       $entityManager->persist($transakcja);
@@ -72,5 +73,48 @@ class MainController extends AbstractController
   public function nadmiar(): Response
   {
     return $this->render('main/nadmiar.html.twig');
+  }
+
+  #[Route('/event/{id}', name: 'app_event')]
+  public function event(int $id, EntityManagerInterface $entityManager): Response
+  {
+    $event = $entityManager->getRepository(Event::class)->find($id);
+    return $this->render(
+      'main/event.html.twig',
+      ["event" => $event]
+    );
+  }
+
+  #[Route('/ticket', name: 'app_user_ticket')]
+  public function ticket(UserInterface $user): Response
+  {
+    $ticket = $user->getTransakcjes();
+    return $this->render(
+      'main/ticket.html.twig',
+      ["ticket" => $ticket]
+    );
+  }
+
+  #[Route('/add/event', name: 'app_add_event')]
+  public function add_event(EntityManagerInterface $entityManager, Request $request): Response
+  {
+    if ($request->isMethod('POST')) {
+      $event_miasto = $request->request->get('miasto');
+      $event_cena = $request->request->get('cena');
+      $event_opis = $request->request->get('opis');
+      $event_ilosc = $request->request->get('ilosc');
+
+      $event = new Event();
+      $event->setMiasto($event_miasto);
+      $event->setCena($event_cena);
+      $event->setOpis($event_opis);
+      $event->setIlosc($event_ilosc);
+      
+      $entityManager->persist($event);
+      $entityManager->flush();
+    }
+    return $this->render(
+      'main/add_event.html.twig'
+    );
   }
 }

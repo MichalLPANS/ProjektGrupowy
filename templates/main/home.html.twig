@@ -13,6 +13,7 @@
   <h1>Wyświetl listę wydarzeń:</h1><button class="btn" onclick="location.href='{{ path('app_list') }}'">Lista wydarzeń</button>
 </section>
 {% else %}
-  <h1>Zaloguj się:</h1><button class="btn" onclick="location.href='{{ path('app_login') }}'">Zaloguj się</button>
+  <h1>Zaloguj się:</h1><button class="btn" onclick="location.href='{{ path('app_login') }}'">Logowanie</button>
+  <h1 style="margin-top: 20px;">Zarejestruj się:</h1><button class="btn" onclick="location.href='{{ path('app_register') }}'">Rejestracja</button>
 {% endif %}
 {% endblock %}

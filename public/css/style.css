@@ -38,6 +38,7 @@ nav {
   background-color: var(--primary);
   width: 100%;
   height: auto;
+  margin-bottom: 50px;
 }
 
 nav .navbar-content {
@@ -63,7 +64,7 @@ section {
 }
 
 .logo {
-  height: 60px;
+  height: 40px;
 }
 
 .content {
@@ -87,7 +88,9 @@ nav .hyperlinks button,
   transition:
     background-color 0.3s ease,
     border-radius 0.3s ease;
-  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  color: black;
 }
 
 nav .hyperlinks button:hover,
@@ -117,10 +120,7 @@ nav .hyperlinks button:hover,
   transition: border 0.3s ease;
 }
 
-.login-input:hover {
-  border: 3px solid rgba(0, 127, 0, 1);
-}
-
+.login-input:hover,
 .login-input:focus {
   border: 3px solid rgba(0, 127, 0, 1);
 }
@@ -140,17 +140,30 @@ nav .hyperlinks button:hover,
   flex-direction: column;
   border: var(--accent) 2px solid;
   border-radius: 20px;
-  height: 300px;
+  height: 150px;
   width: 300px;
   margin: 15px;
   padding: 10px;
 }
 
+.event-info {
+  display: flex;
+  flex-direction: column;
+  border: var(--accent) 2px solid;
+  border-radius: 20px;
+  height: 500px;
+  width: 500px;
+  margin: 15px;
+  padding: 10px;
+}
+
+.event-info h2,
 .event h2 {
   justify-self: center;
   align-self: center;
 }
 
+.event-info p,
 .event p {
   margin-bottom: auto;
   overflow: scroll;
@@ -167,4 +180,73 @@ nav .hyperlinks button:hover,
 
 .price input {
   width: 50px;
+}
+
+.tickets-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.ticket {
+  border: var(--accent) 2px solid;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.add-event {
+  font-size: 50pt;
+  font-weight: bold;
+  margin: auto;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.event-form {
+  width: 200px;
+  border: var(--accent) 2px solid;
+  border-radius: 10px;
+  transition: border 0.3s ease;
+  margin: 2px;
+  padding: 5px;
+}
+
+.register-form,
+.register-form div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-items: center;
+  justify-content: center;
+}
+
+.register-form input {
+  padding: 5px;
+  margin-bottom: 5px;
+  border: 3px solid rgba(0, 127, 0, 0.1);
+  transition: border 0.3s ease;
+}
+
+.register-form input:hover,
+.register-form input:focus {
+  border: 3px solid rgba(0, 127, 0, 1);
+}
+
+.event-form:hover {
+  border: var(--secondary) 2px solid;
+}
+
+.event-create-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-items: center;
+  justify-content: center;
 }

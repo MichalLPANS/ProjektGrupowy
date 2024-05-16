@@ -44,15 +44,25 @@
   {% set suma = suma + item.iloscBiletow %}
 {% endfor %}
       Bilety: {{ iteration.ilosc }} (dostępne: {{ iteration.ilosc - suma }})
-      <p>{{ iteration.opis }}</p>
+      <a class="btn" href="{{ path('app_event', {'id': iteration.id}) }}">Zobacz więcej</a>
       <div class="price">
         Cena: {{ iteration.cena }} zł
-        <input type="number" id="ilosc" name="ilosc" placeholder="Ilość" min="1" required>
-        <input type="hidden" id="event" name="event" value="{{ iteration.id }}">
+{% if iteration.ilosc - suma == 0 %}
+        <input type="number" id="ilosc" name="ilosc" placeholder="Ilość" value="" disabled>
+        <a href="#" class="btn">Brak biletów</a>
+{% else %}
+        <input type="number" id="ilosc" name="ilosc" placeholder="Ilość" min="1" max="{{ iteration.ilosc - suma }}" required>
         <button type="submit" class="btn">Kup bilet(-y)</button>
+{% endif %}
+        <input type="hidden" id="event" name="event" value="{{ iteration.id }}">
       </div>
     </div>
   </form>
 {% endfor %}
+{% if 'ROLE_ADMIN' in app.user.roles %}
+  <div class="event">
+    <a class="add-event" href="{{ path('app_add_event') }}">+</a>
+  </div>
+{% endif %}
 </div>
 {% endblock %}

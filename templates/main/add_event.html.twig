@@ -1,0 +1,19 @@
+{% extends 'main.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+<form method="post" action="">
+  <div class="event-create-form">
+    <label>Podaj Miasto: </label>
+    <input class="event-form" type="text" id="miasto" name="miasto" required>
+    <label>Podaj cenę: </label>
+    <input class="event-form" type="number" min="1" id="cena" name="cena" required>
+    <label>Podaj opis</label>
+    <textarea class="event-form" id="opis" name="opis" required></textarea>
+    <label>Podaj ilosc biletów: </label>
+    <input class="event-form" type="number" min="1" id="ilosc" name="ilosc" required>
+    <button class="btn" type="submit">Utwórz wydarzenie</button>
+  </div>
+</form>
+{% endblock %}

@@ -1,20 +1,23 @@
 <nav>
   <div class="navbar-content">
     <div class="logo">
-      <a href="https://www.youtube.com/watch?v=NeQM1c-XCDc&t=231s">
+      <a href="{{ path('app_home') }}">
         <img class="logo" src="{{ asset('/img/logo.gif') }}" alt="Logo">
       </a>
     </div>
     <div class="hyperlinks">
-      <button onclick="location.href='{{ path('app_home') }}'">Strona główna</button>
+      <a class="btn" href="{{ path('app_home') }}">Strona główna</a>
 {% if app.user %}
-      <button onclick="location.href='{{ path('app_list') }}'">Lista wydarzeń</button>
-{% if 'ROLE_ADMIN' in app.user.roles %}
-      <button onclick="location.href='{{ path('app_admin') }}'">Lista admina</button>
+      <a class="btn" href="{{ path('app_list') }}">Lista wydarzeń</a>
+{% if app.user and 'ROLE_ADMIN' not in app.user.roles %}
+  <a class="btn" href="{{ path('app_user_ticket') }}">Lista kupionych biletów</a>
+{% endif %}{% if 'ROLE_ADMIN' in app.user.roles %}
+      <a class="btn" href="{{ path('app_admin') }}">EasyAdmin</a>
 {% endif %}
-      <button onclick="location.href='{{ path('app_logout') }}'">Wyloguj się</button>
+      <a class="btn" href="{{ path('app_logout') }}">Wyloguj się</a>
 {% else %}
-      <button onclick="location.href='{{ path('app_login') }}'">Zaloguj się</button>
+      <a class="btn" href="{{ path('app_login') }}">Zaloguj się</a>
+      <a class="btn" href="{{ path('app_register') }}">Zarejestruj się</a>
 {% endif %}
     </div>
   </div>

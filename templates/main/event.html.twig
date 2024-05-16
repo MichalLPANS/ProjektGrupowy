@@ -1,0 +1,29 @@
+{% extends 'main.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+<div class="events">
+  <form method="post" action="{{ path('app_buy') }}">
+    <div class="event-info">
+      <h2 class="h2">{{ event.miasto }}</h2>
+{% set suma = 0 %}
+{% for item in event.bilety %}
+  {% set suma = suma + item.iloscBiletow %}
+{% endfor %}
+      Bilety: {{ event.ilosc }} (dostępne: {{ event.ilosc - suma }})
+      <p>{{ event.opis }}</p>
+      <div class="price">
+        Cena: {{ event.cena }} zł
+{% if event.ilosc - suma == 0 %}
+        <input type="number" id="ilosc" name="ilosc" placeholder="Ilość" value="0" disabled>
+{% else %}
+        <input type="number" id="ilosc" name="ilosc" placeholder="Ilość" min="1" max="{{ event.ilosc - suma }}" required>
+{% endif %}
+        <input type="hidden" id="event" name="event" value="{{ event.id }}">
+        <button type="submit" class="btn">Kup bilet(-y)</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

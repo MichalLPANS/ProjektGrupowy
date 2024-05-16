@@ -31,12 +31,13 @@ class Event
   /**
    * @var Collection<int, Transakcje>
    */
-  #[ORM\ManyToMany(targetEntity: Transakcje::class, inversedBy: 'events')]
+  #[ORM\OneToMany(targetEntity: Transakcje::class, mappedBy: 'events')]
   private Collection $bilety;
+
 
   public function __construct()
   {
-      $this->bilety = new ArrayCollection();
+    $this->bilety = new ArrayCollection();
   }
 
   public function __toString(): string
@@ -46,55 +47,55 @@ class Event
 
   public function getId(): ?int
   {
-    return $this->id;
+      return $this->id;
   }
 
   public function getMiasto(): ?string
   {
-    return $this->miasto;
+      return $this->miasto;
   }
 
   public function setMiasto(string $miasto): static
   {
-    $this->miasto = $miasto;
+      $this->miasto = $miasto;
 
-    return $this;
+      return $this;
   }
 
   public function getCena(): ?float
   {
-    return $this->cena;
+      return $this->cena;
   }
 
   public function setCena(float $cena): static
   {
-    $this->cena = $cena;
+      $this->cena = $cena;
 
-    return $this;
+      return $this;
   }
 
   public function getOpis(): ?string
   {
-    return $this->opis;
+      return $this->opis;
   }
 
   public function setOpis(string $opis): static
   {
-    $this->opis = $opis;
+      $this->opis = $opis;
 
-    return $this;
+      return $this;
   }
 
   public function getIlosc(): ?int
   {
-    return $this->ilosc;
+      return $this->ilosc;
   }
 
   public function setIlosc(int $ilosc): static
   {
-    $this->ilosc = $ilosc;
+      $this->ilosc = $ilosc;
 
-    return $this;
+      return $this;
   }
 
   /**
@@ -109,6 +110,7 @@ class Event
   {
       if (!$this->bilety->contains($bilety)) {
           $this->bilety->add($bilety);
+          $bilety->setEvents($this);
       }
 
       return $this;
@@ -116,7 +118,12 @@ class Event
 
   public function removeBilety(Transakcje $bilety): static
   {
-      $this->bilety->removeElement($bilety);
+      if ($this->bilety->removeElement($bilety)) {
+          // set the owning side to null (unless already changed)
+          if ($bilety->getEvents() === $this) {
+              $bilety->setEvents(null);
+          }
+      }
 
       return $this;
   }
