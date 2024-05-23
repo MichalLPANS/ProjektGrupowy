@@ -42,6 +42,10 @@ class MainController extends AbstractController
       $ilosc = $request->request->get('ilosc');
       $event = $entityManager->getRepository(Event::class)->find($event_id);
       
+      if ($event == null) {
+        return $this->redirectToRoute('app_nadmiar');
+      }
+
       $ilosc_kupionych_biletow = $event->getBilety();
       $suma = 0;
 
@@ -49,7 +53,7 @@ class MainController extends AbstractController
         $suma += $value->getIloscBiletow();
       }
 
-      if ($suma + $ilosc > $event->getIlosc()) {
+      if ($suma + $ilosc > $event->getIlosc() or $ilosc <=0) {
         return $this->redirectToRoute('app_nadmiar');
       }
       $transakcja = new Transakcje();
